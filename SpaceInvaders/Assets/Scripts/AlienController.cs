@@ -42,6 +42,7 @@ public class AlienController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
+    [SerializeField] private Transform alienBullet;
 
     public float Width { get { return sprite.size.x; } }
     public float Height { get { return sprite.size.y; } }
@@ -51,7 +52,7 @@ public class AlienController : MonoBehaviour
     public Color Color { get; private set; }
     public bool IsDead { get; private set; }
 
-    public Vector2 PositioninMatrix { get; private set; }
+    public Vector2 PositioninMatrix { get; private set; } = default;
 
     public Action<Vector2> OnDestroy;
     
@@ -72,8 +73,23 @@ public class AlienController : MonoBehaviour
         
     }
 
+
+
+    public void Shoot()
+    {
+        Instantiate(alienBullet, transform.localPosition, Quaternion.identity);
+    }
+
+
+
+
+
+
     public void SetPositionInMatrix(int column, int row)
     {
+        if (PositioninMatrix.Equals(default) == false)
+            return;
+        
         PositioninMatrix = new Vector2(column, row);
     }
 

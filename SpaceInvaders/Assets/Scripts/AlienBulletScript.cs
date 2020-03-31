@@ -2,23 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBulletScript : MonoBehaviour
+public class AlienBulletScript : MonoBehaviour
 {
-
     private void Awake()
     {
-        Destroy(gameObject, 1);
+        Destroy(gameObject, 2);
     }
 
     void Update()
     {
-        transform.Translate(Vector3.up * 0.1f);
+        transform.Translate(Vector3.down * 0.08f);
     }
 
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Destroy(gameObject);
+        if (collider.gameObject.tag == "Player")
+            Destroy(gameObject);
     }
-
 }

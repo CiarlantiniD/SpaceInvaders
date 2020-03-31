@@ -31,6 +31,7 @@ public class AlienInstancer : MonoBehaviour
         totalHeight = height * rows + pandding * (rows - 1);
 
         CreateAlienInstances();
+        StartCoroutine(ShootBullet());
     }
 
     private void CreateAlienInstances()
@@ -86,6 +87,27 @@ public class AlienInstancer : MonoBehaviour
             {
                 alienControllers[valueX, valueY].Destoy();
             }
+        }
+    }
+
+
+    IEnumerator ShootBullet()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(1,3));
+
+            // + if Pause
+
+            for (int i = 0; i < rows * columns; i++)
+            {
+                if (alienControllers[Random.Range(0, 3), Random.Range(0, 3)].IsDead == false)
+                {
+                    alienControllers[Random.Range(0, 3), Random.Range(0, 3)].Shoot();
+                    break;
+                }
+            }
+            
         }
     }
 
