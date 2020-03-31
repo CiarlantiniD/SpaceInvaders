@@ -64,7 +64,15 @@ public class AlienController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "PlayerBullet")
+        if (collision.gameObject.tag == "PlayerBullet")
+            Hit();
+    }
+
+    public void Hit()
+    {
+        --lifes;
+
+        if(lifes == 0)
             Destroy(gameObject);
     }
 }
