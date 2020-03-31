@@ -76,6 +76,7 @@ MonoBehaviour:
   animator: {fileID: 3806566526785905505}
   alienBullet: {fileID: 5046282303817895002, guid: 185b0df73ce28dc4093a8de81550981f,
     type: 3}
+  boxCollider: {fileID: 4473817163138726610}
 --- !u!95 &3806566526785905505
 Animator:
   serializedVersion: 3

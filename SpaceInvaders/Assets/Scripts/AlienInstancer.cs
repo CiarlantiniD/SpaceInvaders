@@ -82,7 +82,7 @@ public class AlienInstancer : MonoBehaviour
             if (valueX >= 0 && valueX < columns && 
                     valueY >= 0 && valueY < rows && 
                         currentAlienControllers.TypeID == alienControllers[valueX, valueY].TypeID && 
-                            alienControllers[valueX, valueY].IsDead == false
+                            alienControllers[valueX, valueY].IsAlive
             ) 
             {
                 alienControllers[valueX, valueY].Destoy();
@@ -101,7 +101,7 @@ public class AlienInstancer : MonoBehaviour
 
             for (int i = 0; i < rows * columns; i++)
             {
-                if (alienControllers[Random.Range(0, 3), Random.Range(0, 3)].IsDead == false)
+                if (alienControllers[Random.Range(0, 3), Random.Range(0, 3)].IsAlive)
                 {
                     alienControllers[Random.Range(0, 3), Random.Range(0, 3)].Shoot();
                     break;

@@ -44,13 +44,15 @@ public class AlienController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Transform alienBullet;
 
+    [SerializeField] private BoxCollider2D boxCollider;
+
     public float Width { get { return sprite.size.x; } }
     public float Height { get { return sprite.size.y; } }
 
     public int TypeID { get; private set; }
     public int Lifes { get; private set; }
     public Color Color { get; private set; }
-    public bool IsDead { get; private set; }
+    public bool IsAlive { get; private set; }
 
     public Vector2 PositioninMatrix { get; private set; } = default;
 
@@ -66,6 +68,8 @@ public class AlienController : MonoBehaviour
         Color = alienType.color;
 
         sprite.color = Color;
+
+        IsAlive = true;
     }
 
     void Update()
@@ -120,10 +124,10 @@ public class AlienController : MonoBehaviour
 
     public void Destoy()
     {
-        if (IsDead)
+        if (IsAlive == false)
             return;
 
-        IsDead = true;
+        IsAlive = false;
         StartCoroutine(DestroyAnimation());
     }
 
@@ -132,7 +136,10 @@ public class AlienController : MonoBehaviour
         animator.SetTrigger("Destroy");
         yield return new WaitForSeconds(0.1f);
         OnDestroy?.Invoke(PositioninMatrix);
-        Destroy(gameObject);
+        //Destroy(gameObject);
+
+
+        boxCollider.enabled = false;
     }
 
 }
