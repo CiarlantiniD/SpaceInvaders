@@ -60,9 +60,33 @@ public class AlienInstancer : MonoBehaviour
         }
     }
 
-    private void CheckToDestroyOthers(Vector2 vector2)
+
+
+    private void CheckToDestroyOthers(Vector2 alienPositionInMatrix)
     {
-        Debug.Log("Murio el Alien en la posición: x" + vector2.x + "  /  y" + vector2.y);
+        Vector2 [] positionsToCheck = new Vector2[4];
+
+        positionsToCheck[0] = new Vector2(alienPositionInMatrix.x, alienPositionInMatrix.y + 1);
+        positionsToCheck[1] = new Vector2(alienPositionInMatrix.x, alienPositionInMatrix.y - 1);
+        positionsToCheck[2] = new Vector2(alienPositionInMatrix.x - 1, alienPositionInMatrix.y);
+        positionsToCheck[3] = new Vector2(alienPositionInMatrix.x + 1, alienPositionInMatrix.y);
+
+        AlienController currentAlienControllers = alienControllers[(int)alienPositionInMatrix.x, (int)alienPositionInMatrix.y];
+
+        for (int i = 0; i < positionsToCheck.Length; i++)
+        {
+            int valueX = (int)positionsToCheck[i].x;
+            int valueY = (int)positionsToCheck[i].y;
+
+            if (valueX >= 0 && valueX < columns && 
+                    valueY >= 0 && valueY < rows && 
+                        currentAlienControllers.TypeID == alienControllers[valueX, valueY].TypeID && 
+                            alienControllers[valueX, valueY].IsDead == false
+            ) 
+            {
+                alienControllers[valueX, valueY].Destoy();
+            }
+        }
     }
 
 }

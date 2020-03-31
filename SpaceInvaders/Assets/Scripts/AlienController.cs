@@ -5,13 +5,15 @@ using System;
 
 public class AlienType
 {
-    public readonly Color color;
     public readonly int lifes;
+    public readonly int typeId;
+    public readonly Color color;
 
-    public AlienType(Color color, int lifes)
+    public AlienType(int typeId, int lifes, Color color)
     {
-        this.color = color;
+        this.typeId = typeId;
         this.lifes = lifes;
+        this.color = color;
     }
 }
 
@@ -22,10 +24,10 @@ public class AlienTypeGetter
     public AlienTypeGetter()
     {
         alienTypes = new AlienType[4];
-        alienTypes[0] = new AlienType(Color.red, 2);
-        alienTypes[1] = new AlienType(Color.yellow, 2);
-        alienTypes[2] = new AlienType(Color.blue, 1);
-        alienTypes[3] = new AlienType(Color.green, 1);
+        alienTypes[0] = new AlienType(1,2,Color.red);
+        alienTypes[1] = new AlienType(2,2,Color.yellow);
+        alienTypes[2] = new AlienType(3,1,Color.blue);
+        alienTypes[3] = new AlienType(4,1,Color.green);
     }
 
     public AlienType GetRandomAlienType()
@@ -44,8 +46,10 @@ public class AlienController : MonoBehaviour
     public float Width { get { return sprite.size.x; } }
     public float Height { get { return sprite.size.y; } }
 
-    private int lifes;
-    private Color color;
+    public int TypeID { get; private set; }
+    public int Lifes { get; private set; }
+    public Color Color { get; private set; }
+    public bool IsDead { get; private set; }
 
     public Vector2 PositioninMatrix { get; private set; }
 
@@ -54,12 +58,13 @@ public class AlienController : MonoBehaviour
     void Start()
     {
         AlienTypeGetter alienTypeGetter = new AlienTypeGetter();
-        AlienType myAlienType = alienTypeGetter.GetRandomAlienType();
+        AlienType alienType = alienTypeGetter.GetRandomAlienType();
 
-        lifes = myAlienType.lifes;
-        color = myAlienType.color;
+        TypeID = alienType.typeId;
+        Lifes = alienType.lifes;
+        Color = alienType.color;
 
-        sprite.color = color;
+        sprite.color = Color;
     }
 
     void Update()
@@ -82,19 +87,28 @@ public class AlienController : MonoBehaviour
 
     public void Hit()
     {
-        if (lifes == 0)
+        if (Lifes == 0)
             return;
 
-        --lifes;
+        --Lifes;
 
-        if(lifes == 0)
+        if(Lifes == 0)
         {
-            StartCoroutine(DestroyAnimation());
+            Destoy();
         }
         else
         {
             animator.SetTrigger("Hit");
         }
+    }
+
+    public void Destoy()
+    {
+        if (IsDead)
+            return;
+
+        IsDead = true;
+        StartCoroutine(DestroyAnimation());
     }
 
     IEnumerator DestroyAnimation()
