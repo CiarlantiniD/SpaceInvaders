@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Transform bulletPlayer; 
+    [SerializeField] private Transform bulletPlayer;
 
+    private bool isAlive;
     
     void Start()
     {
-        
+        isAlive = true;
     }
 
     void Update()
@@ -37,6 +38,19 @@ public class PlayerController : MonoBehaviour
         {
             Instantiate(bulletPlayer, transform.localPosition, Quaternion.identity);
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Alien" || collision.gameObject.tag == "AlienBullet")
+            Hit();
+    }
+
+    void Hit()
+    {
+        if (isAlive == false)
+            return;
+        Destroy(gameObject);
     }
 
 }
