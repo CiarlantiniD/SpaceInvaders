@@ -37,7 +37,7 @@ public class AlienTypeGetter
 
 public class AlienController : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] public SpriteRenderer sprite;
 
     private int lifes;
     private Color color;
