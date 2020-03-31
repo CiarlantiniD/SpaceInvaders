@@ -50,6 +50,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isAlive == false)
             return;
+
+        GameManager.OnPlayerDestroy?.Invoke();
         Destroy(gameObject);
     }
 
