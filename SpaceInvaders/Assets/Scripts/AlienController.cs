@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class AlienType
 {
@@ -29,7 +30,7 @@ public class AlienTypeGetter
 
     public AlienType GetRandomAlienType()
     {
-        return alienTypes[Random.Range(0, alienTypes.Length)];
+        return alienTypes[UnityEngine.Random.Range(0, alienTypes.Length)];
     }
 
 }
@@ -45,7 +46,10 @@ public class AlienController : MonoBehaviour
 
     private int lifes;
     private Color color;
-    
+
+    public Vector2 PositioninMatrix { get; private set; }
+
+    public Action<Vector2> OnDestroy;
     
     void Start()
     {
@@ -62,6 +66,13 @@ public class AlienController : MonoBehaviour
     {
         
     }
+
+    public void SetPositionInMatrix(int column, int row)
+    {
+        PositioninMatrix = new Vector2(column, row);
+    }
+
+
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -90,6 +101,7 @@ public class AlienController : MonoBehaviour
     {
         animator.SetTrigger("Destroy");
         yield return new WaitForSeconds(0.1f);
+        OnDestroy?.Invoke(PositioninMatrix);
         Destroy(gameObject);
     }
 

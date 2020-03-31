@@ -16,8 +16,12 @@ public class AlienInstancer : MonoBehaviour
     private float totalWidth;
     private float totalHeight;
 
+    AlienController[,] alienControllers;
+
     void Start()
     {
+        alienControllers = new AlienController[columns, rows];
+
         AlienController alienController = alien.GetComponent<AlienController>();
 
         width = alienController.Width;
@@ -42,15 +46,23 @@ public class AlienInstancer : MonoBehaviour
         {
             for (int j = 0; j < columns; j++)
             {
-                Instantiate(alien, position, Quaternion.identity, transform);
+                GameObject alienTranform =  Instantiate(alien, position, Quaternion.identity, transform);
+                alienControllers[j, i] = alienTranform.GetComponent<AlienController>();
+                alienControllers[j, i].SetPositionInMatrix(j,i);
+                alienControllers[j, i].OnDestroy += CheckToDestroyOthers;
 
-                if(j != columns)
+                if (j != columns)
                     position.x += width + pandding;
             }
 
             position.x = resetX;
             position.y += height + pandding;
         }
+    }
+
+    private void CheckToDestroyOthers(Vector2 vector2)
+    {
+        Debug.Log("Murio el Alien en la posición: x" + vector2.x + "  /  y" + vector2.y);
     }
 
 }
