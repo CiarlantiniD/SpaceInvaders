@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private UserInterfaceController UIController;
 
-    // Update is called once per frame
-    void Update()
+    public int PlayerLifes { get; private set; } = 3;
+
+    private void Start()
     {
-        
+        UIController.LifesToShow(PlayerLifes);
     }
 }
