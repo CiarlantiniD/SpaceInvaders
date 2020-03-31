@@ -38,6 +38,7 @@ public class AlienTypeGetter
 public class AlienController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private Animator animator;
 
     public float Width { get { return sprite.size.x; } }
     public float Height { get { return sprite.size.y; } }
@@ -70,9 +71,26 @@ public class AlienController : MonoBehaviour
 
     public void Hit()
     {
+        if (lifes == 0)
+            return;
+
         --lifes;
 
         if(lifes == 0)
-            Destroy(gameObject);
+        {
+            StartCoroutine(DestroyAnimation());
+        }
+        else
+        {
+            animator.SetTrigger("Hit");
+        }
     }
+
+    IEnumerator DestroyAnimation()
+    {
+        animator.SetTrigger("Destroy");
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
+    }
+
 }
