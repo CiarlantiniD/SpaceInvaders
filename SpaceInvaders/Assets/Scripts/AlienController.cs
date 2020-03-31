@@ -37,7 +37,10 @@ public class AlienTypeGetter
 
 public class AlienController : MonoBehaviour
 {
-    [SerializeField] public SpriteRenderer sprite;
+    [SerializeField] private SpriteRenderer sprite;
+
+    public float Width { get { return sprite.size.x; } }
+    public float Height { get { return sprite.size.y; } }
 
     private int lifes;
     private Color color;
@@ -59,13 +62,9 @@ public class AlienController : MonoBehaviour
         
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("collision ALIEN");
-        
         if(collision.gameObject.tag == "PlayerBullet")
-        {
             Destroy(gameObject);
-        }
     }
 }

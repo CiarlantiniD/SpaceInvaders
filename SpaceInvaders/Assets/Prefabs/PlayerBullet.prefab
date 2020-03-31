@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 1442815201035717002}
   - component: {fileID: 1330692412480579913}
   - component: {fileID: 6687536177157520498}
+  - component: {fileID: 2659963027088707841}
   - component: {fileID: 4096258061045374835}
   m_Layer: 0
   m_Name: PlayerBullet
-  m_TagString: Untagged
+  m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,6 +108,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.07, y: 0.11}
   m_EdgeRadius: 0
+--- !u!50 &2659963027088707841
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2925821032810382955}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &4096258061045374835
 MonoBehaviour:
   m_ObjectHideFlags: 0

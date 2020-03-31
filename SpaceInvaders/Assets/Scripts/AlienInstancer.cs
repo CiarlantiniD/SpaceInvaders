@@ -20,8 +20,8 @@ public class AlienInstancer : MonoBehaviour
     {
         AlienController alienController = alien.GetComponent<AlienController>();
 
-        width = alienController.sprite.size.x;
-        height = alienController.sprite.size.y;
+        width = alienController.Width;
+        height = alienController.Height;
 
         totalWidth = width * columns + pandding * (columns - 1);
         totalHeight = height * rows + pandding * (rows - 1);

@@ -19,4 +19,11 @@ public class PlayerBulletScript : MonoBehaviour
     {
         transform.Translate(Vector3.up * 0.1f);
     }
+
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        Destroy(gameObject);
+    }
+
 }
