@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
 
     static public Action OnPlayerDestroy;
+    static public Action OnAllAliensDestroy;
 
     public int PlayerLifes { get; private set; } = 3;
 
@@ -29,13 +30,35 @@ public class GameManager : MonoBehaviour
 
     private void PlayerDestroy()
     {
-        StartCoroutine(PlayerRecoveryAnimation());
+        PlayerLifes -= 1;
+
+        UIController.LifesToShow(PlayerLifes);
+
+        if (PlayerLifes > 0)
+        {
+            StartCoroutine(PlayerRecoveryAnimation());
+
+        }
+        else
+        {
+            Debug.Log("Game Over");
+        }
+
     }
 
     IEnumerator PlayerRecoveryAnimation()
     {
         yield return new WaitForSeconds(2);
         CreatePlayer();
+    }
+
+    private void RestartLevel()
+    {
+        
+        
+        // + Animacion
+        // + Reposicionar Player
+        // + Volver a Cargar los Alines
     }
 
 
