@@ -57,18 +57,15 @@ public class AlienController : MonoBehaviour
     public Vector2 PositioninMatrix { get; private set; } = default;
 
     public Action<Vector2> OnDestroy;
-    
+
+    private AlienTypeGetter alienTypeGetter;
+
+
     void Start()
     {
-        AlienTypeGetter alienTypeGetter = new AlienTypeGetter();
-        AlienType alienType = alienTypeGetter.GetRandomAlienType();
+        alienTypeGetter = new AlienTypeGetter();
 
-        TypeID = alienType.typeId;
-        Lifes = alienType.lifes;
-        Color = alienType.color;
-
-        sprite.color = Color;
-
+        SetAlienType();
         IsAlive = true;
     }
 
@@ -76,6 +73,29 @@ public class AlienController : MonoBehaviour
     {
         
     }
+
+
+
+    public void OnReset()
+    {
+        SetAlienType();
+        IsAlive = true;
+        boxCollider.enabled = true;
+        animator.SetTrigger("Reset");
+    }
+
+
+    private void SetAlienType()
+    {
+        AlienType alienType = alienTypeGetter.GetRandomAlienType();
+
+        TypeID = alienType.typeId;
+        Lifes = alienType.lifes;
+        Color = alienType.color;
+
+        sprite.color = Color;
+    }
+
 
 
 

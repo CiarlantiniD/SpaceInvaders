@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public struct AlienInstancerConfiguration
 {
@@ -20,6 +21,7 @@ public struct AlienInstancerConfiguration
 public class AlienInstancer : MonoBehaviour
 {
     [SerializeField] private GameObject alien = null;
+    [SerializeField] private AlienTranslation alienTranslation;
 
     private AlienInstancerConfiguration configuration;
 
@@ -34,7 +36,7 @@ public class AlienInstancer : MonoBehaviour
 
     AlienController[,] alienControllers;
 
-
+    private IEnumerator ShootBulletCoroutine;
 
     public void SetConfiguration(AlienInstancerConfiguration config)
     {
@@ -58,7 +60,10 @@ public class AlienInstancer : MonoBehaviour
     public void CreateAliens()
     {
         CreateAlienInstances();
-        StartCoroutine(ShootBullet());
+        alienTranslation.StartTranslate();
+
+        ShootBulletCoroutine = ShootBullet();
+        StartCoroutine(ShootBulletCoroutine);
     }
 
 
@@ -98,9 +103,15 @@ public class AlienInstancer : MonoBehaviour
         ++totalAlienDeaths;
 
         if (totalAlienDeaths == totalAliens)
+        {
+            StopCoroutine(ShootBulletCoroutine);
+            alienTranslation.StopTranslate();
             GameManager.OnAllAliensDestroy?.Invoke();
+        }
         else
+        {
             CheckToDestroyOthers(alienPositionInMatrix);
+        }
     }
 
 
@@ -136,20 +147,35 @@ public class AlienInstancer : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(1,3));
+            yield return new WaitForSeconds(UnityEngine.Random.Range(1,3));
 
             // + if Pause
 
             for (int i = 0; i < configuration.rows * configuration.columns; i++)
             {
-                if (alienControllers[Random.Range(0, 3), Random.Range(0, 3)].IsAlive)
+                if (alienControllers[UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3)].IsAlive)
                 {
-                    alienControllers[Random.Range(0, 3), Random.Range(0, 3)].Shoot();
+                    alienControllers[UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3)].Shoot();
                     break;
                 }
             }
             
         }
     }
+
+
+    public void ResetAlines()
+    {
+        foreach (AlienController item in alienControllers)
+        {
+            item.OnReset();
+        }
+
+        alienTranslation.StartTranslate();
+
+        ShootBulletCoroutine = ShootBullet();
+        StartCoroutine(ShootBulletCoroutine);
+    }
+
 
 }

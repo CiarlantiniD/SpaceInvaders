@@ -470,6 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alien: {fileID: 4473817163138726621, guid: d50d9ee0d2ef2f248b46744dd4fb1d8b, type: 3}
+  alienTranslation: {fileID: 1241697500}
 --- !u!4 &1241697499
 Transform:
   m_ObjectHideFlags: 0

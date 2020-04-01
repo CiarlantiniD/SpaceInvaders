@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
         UIController.LifesToShow(PlayerLifes);
 
         OnPlayerDestroy += PlayerDestroy;
-        OnAllAliensDestroy += delegate { Debug.Log("Todos los aliens murieron"); };
+        OnAllAliensDestroy += RestartLevel;
 
         AlienInstancerConfiguration config = new AlienInstancerConfiguration(columns, rows, pandding);
         alienInstancer.SetConfiguration(config);
@@ -33,10 +33,19 @@ public class GameManager : MonoBehaviour
 
 
 
-    private void CreatePlayer()
+
+    private void RestartLevel()
     {
-        Instantiate(player);
+        Debug.Log("Todos los aliens murieron. Se reinicia el nivel");
+
+        alienInstancer.ResetAlines();
+
+        // + Animacion
+        // + Reposicionar Player
     }
+
+
+
 
     private void PlayerDestroy()
     {
@@ -45,16 +54,13 @@ public class GameManager : MonoBehaviour
         UIController.LifesToShow(PlayerLifes);
 
         if (PlayerLifes > 0)
-        {
             StartCoroutine(PlayerRecoveryAnimation());
-
-        }
         else
-        {
-            Debug.Log("Game Over");
-        }
-
+            StartCoroutine(StopGameAnimation());
     }
+
+
+
 
     IEnumerator PlayerRecoveryAnimation()
     {
@@ -62,13 +68,26 @@ public class GameManager : MonoBehaviour
         CreatePlayer();
     }
 
-    private void RestartLevel()
+    private void CreatePlayer()
+    {
+        Instantiate(player);
+    }
+
+    
+
+
+
+    IEnumerator StopGameAnimation()
+    {
+        Debug.Log("Game Over");
+        StopGame();
+        yield return new WaitForSeconds(2);
+        // + Vuelve al Menu
+    }
+
+    private void StopGame()
     {
         
-        
-        // + Animacion
-        // + Reposicionar Player
-        // + Volver a Cargar los Alines
     }
 
 
