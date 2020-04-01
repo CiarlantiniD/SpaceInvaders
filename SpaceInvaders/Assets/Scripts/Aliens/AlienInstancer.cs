@@ -3,25 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public struct AlienInstancerConfiguration
-{
-    public readonly int columns;
-    public readonly int rows;
-    public readonly float pandding;
-
-    public AlienInstancerConfiguration(int columns, int rows, float pandding)
-    {
-        this.columns = columns;
-        this.rows = rows;
-        this.pandding = pandding;
-    }
-}
-
-
 public class AlienInstancer : MonoBehaviour
 {
     [SerializeField] private GameObject alien = null;
     [SerializeField] private AlienTranslation alienTranslation;
+    [SerializeField] private AlienBulletController alienBulletController;
 
     private AlienInstancerConfiguration configuration;
 
@@ -36,13 +22,12 @@ public class AlienInstancer : MonoBehaviour
 
     AlienController[,] alienControllers;
 
-    private IEnumerator ShootBulletCoroutine;
 
     public void SetConfiguration(AlienInstancerConfiguration config)
     {
         configuration = config;
 
-        totalAliens = configuration.columns * configuration.rows;
+        totalAliens = config.total;
 
         alienControllers = new AlienController[configuration.columns, configuration.rows];
 
@@ -62,8 +47,9 @@ public class AlienInstancer : MonoBehaviour
         CreateAlienInstances();
         alienTranslation.StartTranslate();
 
-        ShootBulletCoroutine = ShootBullet();
-        StartCoroutine(ShootBulletCoroutine);
+        alienBulletController.SetAlienControllers(alienControllers);
+        alienBulletController.SetAlienInstancerConfiguration(configuration);
+        alienBulletController.StartBullets();
     }
 
 
@@ -104,7 +90,7 @@ public class AlienInstancer : MonoBehaviour
 
         if (totalAlienDeaths == totalAliens)
         {
-            StopCoroutine(ShootBulletCoroutine);
+            alienBulletController.StopBullets();
             alienTranslation.StopTranslate();
             GameManager.OnAllAliensDestroy?.Invoke();
         }
@@ -143,28 +129,10 @@ public class AlienInstancer : MonoBehaviour
     }
 
 
-    IEnumerator ShootBullet()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(UnityEngine.Random.Range(1,3));
-
-            // + if Pause
-
-            for (int i = 0; i < configuration.rows * configuration.columns; i++)
-            {
-                if (alienControllers[UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3)].IsAlive)
-                {
-                    alienControllers[UnityEngine.Random.Range(0, 3), UnityEngine.Random.Range(0, 3)].Shoot();
-                    break;
-                }
-            }
-            
-        }
-    }
+    
 
 
-    public void ResetAlines()
+    public void OnReset()
     {
         foreach (AlienController item in alienControllers)
         {
@@ -172,9 +140,7 @@ public class AlienInstancer : MonoBehaviour
         }
 
         alienTranslation.StartTranslate();
-
-        ShootBulletCoroutine = ShootBullet();
-        StartCoroutine(ShootBulletCoroutine);
+        alienBulletController.StartBullets();
     }
 
 

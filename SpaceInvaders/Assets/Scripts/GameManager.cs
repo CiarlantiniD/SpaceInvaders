@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Todos los aliens murieron. Se reinicia el nivel");
 
-        alienInstancer.ResetAlines();
+        alienInstancer.OnReset();
 
         // + Animacion
         // + Reposicionar Player
