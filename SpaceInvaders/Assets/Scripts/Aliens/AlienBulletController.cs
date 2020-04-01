@@ -52,6 +52,8 @@ public class AlienBulletController : MonoBehaviour
 
     private IEnumerator ShootBullet()
     {
+        yield return new WaitForSeconds(2);
+
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(1, 3));

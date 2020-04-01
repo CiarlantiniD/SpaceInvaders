@@ -88,7 +88,7 @@ public class AlienInstancer : MonoBehaviour
     {
         ++totalAlienDeaths;
 
-        if (totalAlienDeaths == totalAliens)
+        if (totalAlienDeaths >= totalAliens)
         {
             alienBulletController.StopBullets();
             alienTranslation.StopTranslate();
@@ -138,6 +138,7 @@ public class AlienInstancer : MonoBehaviour
         {
             item.OnReset();
         }
+        totalAlienDeaths = 0;
 
         alienTranslation.StartTranslate();
         alienBulletController.StartBullets();
