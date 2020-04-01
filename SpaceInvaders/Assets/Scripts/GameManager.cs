@@ -5,7 +5,12 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private int columns = 10;
+    [SerializeField] private int rows = 4;
+    [SerializeField] private float pandding = 0.25f;
+    [Space(10)]
     [SerializeField] private UserInterfaceController UIController;
+    [SerializeField] private AlienInstancer alienInstancer;
     [SerializeField] private GameObject player;
 
 
@@ -19,6 +24,11 @@ public class GameManager : MonoBehaviour
         UIController.LifesToShow(PlayerLifes);
 
         OnPlayerDestroy += PlayerDestroy;
+        OnAllAliensDestroy += delegate { Debug.Log("Todos los aliens murieron"); };
+
+        AlienInstancerConfiguration config = new AlienInstancerConfiguration(columns, rows, pandding);
+        alienInstancer.SetConfiguration(config);
+        alienInstancer.CreateAliens();
     }
 
 

@@ -419,7 +419,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2fd68a12181d924ead2d19f2733588e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  columns: 10
+  rows: 4
+  pandding: 0.25
   UIController: {fileID: 295964596}
+  alienInstancer: {fileID: 1241697498}
   player: {fileID: 1090799395746019783, guid: 0764d830ff6684d4197e2b6106be331e, type: 3}
 --- !u!4 &805802207
 Transform:
@@ -465,9 +469,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 528547d0ebe178543819a9da5688d2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  columns: 10
-  rows: 4
-  pandding: 0.25
   alien: {fileID: 4473817163138726621, guid: d50d9ee0d2ef2f248b46744dd4fb1d8b, type: 3}
 --- !u!4 &1241697499
 Transform:

@@ -2,13 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct AlienInstancerConfiguration
+{
+    public readonly int columns;
+    public readonly int rows;
+    public readonly float pandding;
+
+    public AlienInstancerConfiguration(int columns, int rows, float pandding)
+    {
+        this.columns = columns;
+        this.rows = rows;
+        this.pandding = pandding;
+    }
+}
+
+
 public class AlienInstancer : MonoBehaviour
 {
-    [SerializeField] private int columns = 10;
-    [SerializeField] private int rows = 4;
-    [SerializeField] private float pandding = 0.25f;
-    [Space(10)]
     [SerializeField] private GameObject alien = null;
+
+    private AlienInstancerConfiguration configuration;
 
     private float width;
     private float height;
@@ -16,23 +29,39 @@ public class AlienInstancer : MonoBehaviour
     private float totalWidth;
     private float totalHeight;
 
+    private int totalAliens;
+    private int totalAlienDeaths;
+
     AlienController[,] alienControllers;
 
-    void Start()
+
+
+    public void SetConfiguration(AlienInstancerConfiguration config)
     {
-        alienControllers = new AlienController[columns, rows];
+        configuration = config;
+
+        totalAliens = configuration.columns * configuration.rows;
+
+        alienControllers = new AlienController[configuration.columns, configuration.rows];
 
         AlienController alienController = alien.GetComponent<AlienController>();
 
         width = alienController.Width;
         height = alienController.Height;
 
-        totalWidth = width * columns + pandding * (columns - 1);
-        totalHeight = height * rows + pandding * (rows - 1);
+        totalWidth = width * configuration.columns + configuration.pandding * (configuration.columns - 1);
+        totalHeight = height * configuration.rows + configuration.pandding * (configuration.rows - 1);
 
+    }
+
+
+    public void CreateAliens()
+    {
         CreateAlienInstances();
         StartCoroutine(ShootBullet());
     }
+
+
 
     private void CreateAlienInstances()
     {
@@ -43,24 +72,36 @@ public class AlienInstancer : MonoBehaviour
 
         float resetX = position.x;
 
-        for (int i = 0; i < rows; i++)
+        for (int i = 0; i < configuration.rows; i++)
         {
-            for (int j = 0; j < columns; j++)
+            for (int j = 0; j < configuration.columns; j++)
             {
                 GameObject alienTranform =  Instantiate(alien, position, Quaternion.identity, transform);
                 alienControllers[j, i] = alienTranform.GetComponent<AlienController>();
                 alienControllers[j, i].SetPositionInMatrix(j,i);
-                alienControllers[j, i].OnDestroy += CheckToDestroyOthers;
+                alienControllers[j, i].OnDestroy += OnAlienDeath;
 
-                if (j != columns)
-                    position.x += width + pandding;
+                if (j != configuration.columns)
+                    position.x += width + configuration.pandding;
             }
 
             position.x = resetX;
-            position.y += height + pandding;
+            position.y += height + configuration.pandding;
         }
     }
 
+   
+
+
+    private void OnAlienDeath(Vector2 alienPositionInMatrix)
+    {
+        ++totalAlienDeaths;
+
+        if (totalAlienDeaths == totalAliens)
+            GameManager.OnAllAliensDestroy?.Invoke();
+        else
+            CheckToDestroyOthers(alienPositionInMatrix);
+    }
 
 
     private void CheckToDestroyOthers(Vector2 alienPositionInMatrix)
@@ -79,8 +120,8 @@ public class AlienInstancer : MonoBehaviour
             int valueX = (int)positionsToCheck[i].x;
             int valueY = (int)positionsToCheck[i].y;
 
-            if (valueX >= 0 && valueX < columns && 
-                    valueY >= 0 && valueY < rows && 
+            if (valueX >= 0 && valueX < configuration.columns && 
+                    valueY >= 0 && valueY < configuration.rows && 
                         currentAlienControllers.TypeID == alienControllers[valueX, valueY].TypeID && 
                             alienControllers[valueX, valueY].IsAlive
             ) 
@@ -99,7 +140,7 @@ public class AlienInstancer : MonoBehaviour
 
             // + if Pause
 
-            for (int i = 0; i < rows * columns; i++)
+            for (int i = 0; i < configuration.rows * configuration.columns; i++)
             {
                 if (alienControllers[Random.Range(0, 3), Random.Range(0, 3)].IsAlive)
                 {
