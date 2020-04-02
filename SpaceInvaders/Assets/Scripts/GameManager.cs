@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     private PlayerController currentPlayerController;
 
+    private SceneManager sceneManager;
+
     static public Action OnPlayerDestroy;
     static public Action OnAllAliensDestroy;
     static public Action OnAliensTouchFloor;
@@ -23,6 +25,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        sceneManager = FindObjectOfType<SceneManager>();
+
+        if (sceneManager == null)
+            throw new Exception("No se encontro el SceneManager");
+
         UIController.LifesToShow(PlayerLifes);
 
         OnPlayerDestroy += PlayerDestroy;
@@ -93,7 +100,8 @@ public class GameManager : MonoBehaviour
         StopGame();
         // Mustra que perdiste
         yield return new WaitForSeconds(2);
-        // + Vuelve al Menu
+
+        sceneManager.GoBackToMenu();
     }
 
     private void StopGame()
