@@ -7,17 +7,34 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform bulletPlayer;
 
     private bool isAlive;
-    
+
+    private const float MIN_X = -6;
+    private const float MAX_X = 6;
+
     void Start()
     {
         isAlive = true;
     }
 
+
+
     void Update()
     {
-        Move();
         Shoot();
+
+        Move();
+        CheckRangeMovement();
     }
+
+
+    private void Shoot()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(bulletPlayer, transform.localPosition, Quaternion.identity);
+        }
+    }
+
 
     private void Move()
     {
@@ -32,13 +49,15 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void Shoot()
+    private void CheckRangeMovement()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Instantiate(bulletPlayer, transform.localPosition, Quaternion.identity);
-        }
+        Vector3 position = transform.position;
+        position.x = Mathf.Clamp(position.x, MIN_X, MAX_X);
+        transform.position = position;
     }
+
+
+    
 
     void OnTriggerEnter2D(Collider2D collision)
     {
