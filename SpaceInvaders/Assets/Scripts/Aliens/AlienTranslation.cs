@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class AlienTranslation : MonoBehaviour
 {
-    private Vector3 initialPosition;
-    private float inicitalIntervale;
-    private bool isActive;
+    [SerializeField] private int lateralMove = 18;
+    [SerializeField] private float unidades = 0.05f;
+    [SerializeField] private float startTimeIntervale = 1f;
 
-    private int lateralMove = 18;
-    private float unidades = 0.05f;
-    private float timeIntervale = 1f;
+    private Vector3 initialPosition;
+    private bool isActive;    
+    
+    private float timeIntervale;
 
     private IEnumerator MoveAliensCoroutine;
 
@@ -18,12 +19,12 @@ public class AlienTranslation : MonoBehaviour
     void Start()
     {
         initialPosition = transform.position;
-        inicitalIntervale = timeIntervale;
     }
 
 
     public void StartTranslate()
     {
+        timeIntervale = startTimeIntervale;
         isActive = true;
         MoveAliensCoroutine = MoveAliens();
         StartCoroutine(MoveAliensCoroutine);
@@ -32,7 +33,7 @@ public class AlienTranslation : MonoBehaviour
     public void StopTranslate()
     {
         isActive = false;
-        timeIntervale = inicitalIntervale;
+        timeIntervale = startTimeIntervale;
         StopCoroutine(MoveAliensCoroutine);
     }
 

@@ -421,7 +421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   columns: 10
   rows: 4
-  pandding: 0.4
+  pandding: 0.6
   UIController: {fileID: 295964596}
   alienInstancer: {fileID: 1241697498}
   player: {fileID: 1090799395746019783, guid: 0764d830ff6684d4197e2b6106be331e, type: 3}
@@ -481,7 +481,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1241697497}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.15, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -499,6 +499,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cdab4892c463d54cbda5ac339cdd00a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lateralMove: 18
+  unidades: 0.1
+  startTimeIntervale: 1
 --- !u!114 &1241697501
 MonoBehaviour:
   m_ObjectHideFlags: 0
