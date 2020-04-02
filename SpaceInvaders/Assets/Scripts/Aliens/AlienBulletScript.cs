@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class AlienBulletScript : MonoBehaviour
 {
-    private void Awake()
+
+    private void OnBecameInvisible()
     {
-        Destroy(gameObject, 2);
+        Destroy(gameObject);
     }
 
     void Update()

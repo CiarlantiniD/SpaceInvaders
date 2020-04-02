@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerBulletScript : MonoBehaviour
 {
 
-    private void Awake()
+    private void OnBecameInvisible()
     {
-        Destroy(gameObject, 1);
+        Destroy(gameObject);
     }
 
     void Update()
