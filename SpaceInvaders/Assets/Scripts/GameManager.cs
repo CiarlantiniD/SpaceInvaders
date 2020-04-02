@@ -13,9 +13,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AlienInstancer alienInstancer;
     [SerializeField] private GameObject player;
 
+    private PlayerController currentPlayerController;
 
     static public Action OnPlayerDestroy;
     static public Action OnAllAliensDestroy;
+    static public Action OnAliensTouchFloor;
 
     public int PlayerLifes { get; private set; } = 3;
 
@@ -25,12 +27,14 @@ public class GameManager : MonoBehaviour
 
         OnPlayerDestroy += PlayerDestroy;
         OnAllAliensDestroy += RestartLevel;
+        OnAliensTouchFloor += ResetAndLoseALife;
 
         AlienInstancerConfiguration config = new AlienInstancerConfiguration(columns, rows, pandding);
         alienInstancer.SetConfiguration(config);
         alienInstancer.CreateAliens();
-    }
 
+        CreatePlayer();
+    }
 
 
 
@@ -42,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ResetAnimation()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
 
         // + Animacion
         // + Reposicionar Player
@@ -75,7 +79,8 @@ public class GameManager : MonoBehaviour
 
     private void CreatePlayer()
     {
-        Instantiate(player);
+        GameObject currentPlayer = Instantiate(player);
+        currentPlayerController = currentPlayer.GetComponent<PlayerController>();
     }
 
     
@@ -86,14 +91,30 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Game Over");
         StopGame();
+        // Mustra que perdiste
         yield return new WaitForSeconds(2);
         // + Vuelve al Menu
     }
 
     private void StopGame()
     {
-        
+        alienInstancer.Stop();
     }
+
+
+
+
+    private void ResetAndLoseALife() 
+    {
+        if (currentPlayerController == null)
+            return;
+        
+        PlayerLifes = 1;
+        currentPlayerController.Destroy();
+        currentPlayerController = null;
+    }
+
+
 
 
 

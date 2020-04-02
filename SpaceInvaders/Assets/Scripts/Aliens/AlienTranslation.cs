@@ -34,6 +34,10 @@ public class AlienTranslation : MonoBehaviour
         isActive = false;
         timeIntervale = inicitalIntervale;
         StopCoroutine(MoveAliensCoroutine);
+    }
+
+    public void ResetPosition()
+    {
         transform.position = initialPosition;
     }
 

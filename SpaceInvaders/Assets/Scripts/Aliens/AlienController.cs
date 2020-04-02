@@ -101,7 +101,7 @@ public class AlienController : MonoBehaviour
 
     public void Shoot()
     {
-        Instantiate(alienBullet, transform.localPosition, Quaternion.identity);
+        Instantiate(alienBullet, transform.position, Quaternion.identity);
     }
 
 

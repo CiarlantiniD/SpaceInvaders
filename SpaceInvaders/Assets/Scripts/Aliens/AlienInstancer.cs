@@ -53,6 +53,12 @@ public class AlienInstancer : MonoBehaviour
     }
 
 
+    public void Stop()
+    {
+        alienTranslation.StopTranslate();
+        alienBulletController.StopBullets();
+    }
+
 
     private void CreateAlienInstances()
     {
@@ -92,6 +98,7 @@ public class AlienInstancer : MonoBehaviour
         {
             alienBulletController.StopBullets();
             alienTranslation.StopTranslate();
+            alienTranslation.ResetPosition();
             GameManager.OnAllAliensDestroy?.Invoke();
         }
         else

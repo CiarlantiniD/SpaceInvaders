@@ -43,10 +43,10 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Alien" || collision.gameObject.tag == "AlienBullet")
-            Hit();
+            Destroy();
     }
 
-    void Hit()
+    public void Destroy()
     {
         if (isAlive == false)
             return;
