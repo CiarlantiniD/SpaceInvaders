@@ -499,7 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cdab4892c463d54cbda5ac339cdd00a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lateralMove: 18
+  lateralMove: 38
   unidades: 0.1
   startTimeIntervale: 1
 --- !u!114 &1241697501
