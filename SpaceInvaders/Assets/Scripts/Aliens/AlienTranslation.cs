@@ -8,7 +8,7 @@ public class AlienTranslation : MonoBehaviour
     private float inicitalIntervale;
     private bool isActive;
 
-    private int lateralMove = 14;
+    private int lateralMove = 18;
     private float unidades = 0.05f;
     private float timeIntervale = 1f;
 
@@ -47,8 +47,9 @@ public class AlienTranslation : MonoBehaviour
     {
         if (isActive == false)
             return;
-        
-        timeIntervale -= Time.deltaTime * 0.02f;
+
+        if(timeIntervale > 0.04f)
+            timeIntervale -= Time.deltaTime * 0.02f;
     }
 
 
