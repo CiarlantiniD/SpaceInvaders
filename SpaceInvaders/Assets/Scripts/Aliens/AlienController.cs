@@ -123,6 +123,9 @@ public class AlienController : MonoBehaviour
     {
         if (collision.gameObject.tag == "PlayerBullet")
             Hit();
+
+        if (collision.gameObject.tag == "Player")
+            Destoy();
     }
 
     public void Hit()
@@ -153,13 +156,13 @@ public class AlienController : MonoBehaviour
 
     IEnumerator DestroyAnimation()
     {
+        boxCollider.enabled = false;
         animator.SetTrigger("Destroy");
         yield return new WaitForSeconds(0.1f);
         OnDestroy?.Invoke(PositioninMatrix);
         //Destroy(gameObject);
 
 
-        boxCollider.enabled = false;
     }
 
 }
