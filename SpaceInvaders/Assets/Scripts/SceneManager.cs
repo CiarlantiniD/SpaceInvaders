@@ -3,6 +3,20 @@ using UnityEngine.SceneManagement;
 
 public class SceneManager : MonoBehaviour
 {
+    private static SceneManager instanse;
+
+    public static SceneManager Instance
+    {
+        get
+        {
+            if (instanse == null)
+                instanse = FindObjectOfType<SceneManager>();
+
+            return instanse;
+        }
+    }
+
+
     private enum GameScene { Menu = 0, Game}
 
     private GameScene currentGameScene;
@@ -11,14 +25,6 @@ public class SceneManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         currentGameScene = GameScene.Menu;
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            GoToGame();
-        }
     }
 
     public void GoToGame()
