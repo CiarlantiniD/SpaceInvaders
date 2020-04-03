@@ -40,8 +40,7 @@ public class GameManager : MonoBehaviour
         userInferfaceController.LifesToShow(PlayerLifes);
 
         OnPlayerDestroy += PlayerDestroy;
-        OnAlienDestroy += delegate { currentScore += 300; userInferfaceController.SetScore(currentScore); };
-        
+        OnAlienDestroy += Score;
         OnAllAliensDestroy += RestartLevel;
         OnAliensTouchFloor += ResetAndLoseALife;
 
@@ -53,6 +52,20 @@ public class GameManager : MonoBehaviour
         userInferfaceController.SetScore(currentScore);
 
         CreatePlayer();
+    }
+
+    private void OnDestroy()
+    {
+        OnPlayerDestroy -= PlayerDestroy;
+        OnAlienDestroy -= Score;
+        OnAllAliensDestroy -= RestartLevel;
+        OnAliensTouchFloor -= ResetAndLoseALife;
+    }
+
+    private void Score()
+    {
+        currentScore += 300; 
+        userInferfaceController.SetScore(currentScore);
     }
 
 
