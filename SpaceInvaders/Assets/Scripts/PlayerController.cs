@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform bulletPlayer;
 
     private bool isAlive;
+    private bool isPaused;
 
     private const float MIN_X = -6;
     private const float MAX_X = 6;
@@ -14,12 +15,23 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         isAlive = true;
+
+        GameManager.OnPause += PausePlayer;
+        GameManager.OnUnpause += UnpausePlayer;
     }
 
+    private void OnDestroy()
+    {
+        GameManager.OnPause -= PausePlayer;
+        GameManager.OnUnpause -= UnpausePlayer;
+    }
 
 
     void Update()
     {
+        if (isPaused)
+            return;
+        
         Shoot();
 
         Move();
@@ -72,6 +84,17 @@ public class PlayerController : MonoBehaviour
 
         GameManager.OnPlayerDestroy?.Invoke();
         Destroy(gameObject);
+    }
+
+
+    private void PausePlayer()
+    {
+        isPaused = true;
+    }
+
+    private void UnpausePlayer()
+    {
+        isPaused = false;
     }
 
 }

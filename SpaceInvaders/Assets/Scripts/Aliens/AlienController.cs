@@ -54,9 +54,11 @@ public class AlienController : MonoBehaviour
     public Color Color { get; private set; }
     public bool IsAlive { get; private set; }
 
+    private bool isPaused;
+
     public Vector2 PositioninMatrix { get; private set; } = default;
 
-    public Action<Vector2> OnDestroy;
+    public Action<Vector2> OnDestroyAlien;
 
     private AlienTypeGetter alienTypeGetter;
 
@@ -65,14 +67,22 @@ public class AlienController : MonoBehaviour
     {
         alienTypeGetter = new AlienTypeGetter();
 
+        GameManager.OnPause += PauseAlienController;
+        GameManager.OnUnpause += UnpauseAlienController;
+
         SetAlienType();
         IsAlive = true;
     }
 
-    void Update()
+    private void OnDestroy()
     {
-        
+        GameManager.OnPause -= PauseAlienController;
+        GameManager.OnUnpause -= UnpauseAlienController;
     }
+
+
+
+
 
 
 
@@ -159,10 +169,23 @@ public class AlienController : MonoBehaviour
         boxCollider.enabled = false;
         animator.SetTrigger("Destroy");
         yield return new WaitForSeconds(0.1f);
-        OnDestroy?.Invoke(PositioninMatrix);
+        OnDestroyAlien?.Invoke(PositioninMatrix);
         //Destroy(gameObject);
 
 
+    }
+
+
+    void PauseAlienController()
+    {
+        isPaused = true;
+        animator.speed = 0;
+    }
+
+    void UnpauseAlienController()
+    {
+        isPaused = false;
+        animator.speed = 1;
     }
 
 }

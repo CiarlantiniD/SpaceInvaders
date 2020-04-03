@@ -22,7 +22,11 @@ public class GameManager : MonoBehaviour
     static public Action OnAlienDestroy;
     static public Action OnAllAliensDestroy;
     static public Action OnAliensTouchFloor;
-    
+
+    static public Action OnPause;
+    static public Action OnUnpause;
+    private bool isPaused;
+
 
     public int PlayerLifes { get; private set; } = 3;
 
@@ -61,6 +65,29 @@ public class GameManager : MonoBehaviour
         OnAllAliensDestroy -= RestartLevel;
         OnAliensTouchFloor -= ResetAndLoseALife;
     }
+
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
+        {
+            if (isPaused)
+            {
+                OnUnpause?.Invoke();
+                userInferfaceController.TurnOffPausePanel();
+                isPaused = false;
+            }
+            else
+            {
+                OnPause?.Invoke();
+                userInferfaceController.TurnOnPausePanel();
+                isPaused = true;
+            }
+                
+        }
+    }
+
+
 
     private void Score()
     {
@@ -154,7 +181,5 @@ public class GameManager : MonoBehaviour
     }
 
 
-
-
-
+   
 }

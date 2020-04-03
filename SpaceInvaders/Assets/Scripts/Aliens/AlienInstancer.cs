@@ -22,6 +22,18 @@ public class AlienInstancer : MonoBehaviour
 
     AlienController[,] alienControllers;
 
+    private void Start()
+    {
+        GameManager.OnPause += OnPause;
+        GameManager.OnUnpause += OnUnpause;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnPause -= OnPause;
+        GameManager.OnUnpause -= OnUnpause;
+    }
+
 
     public void SetConfiguration(AlienInstancerConfiguration config)
     {
@@ -76,7 +88,7 @@ public class AlienInstancer : MonoBehaviour
                 GameObject alienTranform =  Instantiate(alien, position, Quaternion.identity, transform);
                 alienControllers[j, i] = alienTranform.GetComponent<AlienController>();
                 alienControllers[j, i].SetPositionInMatrix(j,i);
-                alienControllers[j, i].OnDestroy += OnAlienDeath;
+                alienControllers[j, i].OnDestroyAlien += OnAlienDeath;
 
                 if (j != configuration.columns)
                     position.x += width + configuration.pandding;
@@ -151,6 +163,20 @@ public class AlienInstancer : MonoBehaviour
 
         alienTranslation.StartTranslate();
         alienBulletController.StartBullets();
+    }
+
+
+
+    private void OnPause()
+    {
+        alienBulletController.PauseBullets();
+        alienTranslation.PauseMove();
+    }
+
+    private void OnUnpause()
+    {
+        alienBulletController.UnpauseBullets();
+        alienTranslation.UnpauseMove();
     }
 
 

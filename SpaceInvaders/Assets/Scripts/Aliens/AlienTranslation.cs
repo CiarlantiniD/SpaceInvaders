@@ -9,8 +9,9 @@ public class AlienTranslation : MonoBehaviour
     [SerializeField] private float startTimeIntervale = 1f;
 
     private Vector3 initialPosition;
-    private bool isActive;    
-    
+    private bool isActive;
+    private bool isPaused;
+
     private float timeIntervale;
 
     private IEnumerator MoveAliensCoroutine;
@@ -42,6 +43,15 @@ public class AlienTranslation : MonoBehaviour
         transform.position = initialPosition;
     }
 
+    public void PauseMove()
+    {
+        isPaused = true;
+    }
+
+    public void UnpauseMove()
+    {
+        isPaused = false;
+    }
 
 
     private void Update()
@@ -62,10 +72,12 @@ public class AlienTranslation : MonoBehaviour
         {
             transform.Translate(unidades, 0, 0);
             yield return new WaitForSeconds(timeIntervale);
+            while (isPaused) { yield return null; }
         }
 
         transform.Translate(0, down, 0);
         yield return new WaitForSeconds(timeIntervale);
+        while (isPaused) { yield return null; }
 
         while (true)
         {
@@ -73,19 +85,23 @@ public class AlienTranslation : MonoBehaviour
             {
                 transform.Translate(-unidades, 0, 0);
                 yield return new WaitForSeconds(timeIntervale);
+                while (isPaused) { yield return null; }
             }
 
             transform.Translate(0, down, 0);
             yield return new WaitForSeconds(timeIntervale);
+            while (isPaused) { yield return null; }
 
             for (int i = 0; i < lateralMove; i++)
             {
                 transform.Translate(unidades, 0, 0);
                 yield return new WaitForSeconds(timeIntervale);
+                while (isPaused) { yield return null; }
             }
 
             transform.Translate(0, down, 0);
             yield return new WaitForSeconds(timeIntervale);
+            while (isPaused) { yield return null; }
         }
     }
 

@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class AlienBulletScript : MonoBehaviour
 {
+    private bool isPaused;
+    
+    private void Start()
+    {
+        GameManager.OnPause += PauseBullet;
+        GameManager.OnUnpause += UnpauseBullet;
+    }
+
+    void PauseBullet()
+    {
+        isPaused = true;
+    }
+
+    void UnpauseBullet()
+    {
+        isPaused = false;
+    }
+
 
     private void OnBecameInvisible()
     {
@@ -12,6 +30,9 @@ public class AlienBulletScript : MonoBehaviour
 
     void Update()
     {
+        if (isPaused)
+            return;
+
         transform.Translate(Vector3.down * 0.08f);
     }
 
