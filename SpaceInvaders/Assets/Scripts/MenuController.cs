@@ -8,21 +8,27 @@ public class MenuController : MonoBehaviour
     [SerializeField] private MenuUserInterfaceController userInterface;
 
     private SceneManager sceneManager;
+    private RecordManager recordManager;
 
     private void Awake()
     {
         sceneManager = FindObjectOfType<SceneManager>();
+        recordManager = new RecordManager();
 
         if (sceneManager == null)
             throw new Exception("No se encontro el SceneManager");
 
+        SetBestScore();
     }
 
-
-    void Start()
+    private void SetBestScore()
     {
+        int score = recordManager.GetBestScore();
 
+        if (score > 0)
+            userInterface.SetBestScore(score);
     }
+
 
     void Update()
     {
@@ -40,5 +46,7 @@ public class MenuController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         sceneManager.GoToGame();
     }
+
+
 
 }

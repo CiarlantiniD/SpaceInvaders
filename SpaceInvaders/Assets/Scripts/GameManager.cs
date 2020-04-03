@@ -16,12 +16,17 @@ public class GameManager : MonoBehaviour
     private PlayerController currentPlayerController;
 
     private SceneManager sceneManager;
+    private RecordManager recordManager;
 
     static public Action OnPlayerDestroy;
+    static public Action OnAlienDestroy;
     static public Action OnAllAliensDestroy;
     static public Action OnAliensTouchFloor;
+    
 
     public int PlayerLifes { get; private set; } = 3;
+
+    private int currentScore;
 
     private void Start()
     {
@@ -30,15 +35,22 @@ public class GameManager : MonoBehaviour
         if (sceneManager == null)
             throw new Exception("No se encontro el SceneManager");
 
+        recordManager = new RecordManager();
+
         userInferfaceController.LifesToShow(PlayerLifes);
 
         OnPlayerDestroy += PlayerDestroy;
+        OnAlienDestroy += delegate { currentScore += 300; userInferfaceController.SetScore(currentScore); };
+        
         OnAllAliensDestroy += RestartLevel;
         OnAliensTouchFloor += ResetAndLoseALife;
 
         AlienInstancerConfiguration config = new AlienInstancerConfiguration(columns, rows, pandding);
         alienInstancer.SetConfiguration(config);
         alienInstancer.CreateAliens();
+
+
+        userInferfaceController.SetScore(currentScore);
 
         CreatePlayer();
     }
@@ -103,6 +115,9 @@ public class GameManager : MonoBehaviour
 
         userInferfaceController.TurnOnGameOverPanel();
         yield return new WaitForSeconds(4);
+
+        if (recordManager.GetBestScore() < currentScore)
+            recordManager.SaveBestScore(currentScore);
 
         sceneManager.GoBackToMenu();
     }

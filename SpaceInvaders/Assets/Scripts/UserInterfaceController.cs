@@ -10,6 +10,7 @@ public class UserInterfaceController : MonoBehaviour
 
     [SerializeField] private UILifeIndicator lifesIndicator;
 
+    [SerializeField] private Text scoreText;
 
     private void Start()
     {
@@ -39,6 +40,11 @@ public class UserInterfaceController : MonoBehaviour
         SetPanel(true, "Game Over");
     }
 
+
+    public void SetScore(int score)
+    {
+        scoreText.text = "Score - " + score.ToString("00000000000");
+    }
 
 
 

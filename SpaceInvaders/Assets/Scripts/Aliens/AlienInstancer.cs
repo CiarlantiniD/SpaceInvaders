@@ -94,6 +94,8 @@ public class AlienInstancer : MonoBehaviour
     {
         ++totalAlienDeaths;
 
+        GameManager.OnAlienDestroy?.Invoke();
+
         if (totalAlienDeaths >= totalAliens)
         {
             alienBulletController.StopBullets();
