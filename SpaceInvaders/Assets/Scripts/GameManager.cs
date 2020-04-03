@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int rows = 4;
     [SerializeField] private float pandding = 0.25f;
     [Space(10)]
-    [SerializeField] private UserInterfaceController UIController;
+    [SerializeField] private UserInterfaceController userInferfaceController;
     [SerializeField] private AlienInstancer alienInstancer;
     [SerializeField] private GameObject player;
 
@@ -25,12 +25,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        sceneManager = FindObjectOfType<SceneManager>();
+        sceneManager = SceneManager.Instance; //FindObjectOfType<SceneManager>();
 
         if (sceneManager == null)
             throw new Exception("No se encontro el SceneManager");
 
-        UIController.LifesToShow(PlayerLifes);
+        userInferfaceController.LifesToShow(PlayerLifes);
 
         OnPlayerDestroy += PlayerDestroy;
         OnAllAliensDestroy += RestartLevel;
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
     {
         PlayerLifes -= 1;
 
-        UIController.LifesToShow(PlayerLifes);
+        userInferfaceController.LifesToShow(PlayerLifes);
 
         if (PlayerLifes > 0)
             StartCoroutine(PlayerRecoveryAnimation());
@@ -97,9 +97,12 @@ public class GameManager : MonoBehaviour
     IEnumerator StopGameAnimation()
     {
         Debug.Log("Game Over");
+        
         StopGame();
-        // Mustra que perdiste
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1f);
+
+        userInferfaceController.TurnOnGameOverPanel();
+        yield return new WaitForSeconds(4);
 
         sceneManager.GoBackToMenu();
     }
