@@ -18,7 +18,7 @@ public class PlayerBulletScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.tag == "Alien")
+        if (collider.gameObject.tag == "Alien" || collider.gameObject.tag == "Shield")
             Destroy(gameObject);
     }
 
