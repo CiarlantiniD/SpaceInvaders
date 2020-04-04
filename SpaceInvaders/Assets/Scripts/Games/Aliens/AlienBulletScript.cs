@@ -25,7 +25,7 @@ public class AlienBulletScript : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     void Update()
@@ -40,6 +40,6 @@ public class AlienBulletScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Shield")
-            Destroy(gameObject);
+            gameObject.SetActive(false);
     }
 }

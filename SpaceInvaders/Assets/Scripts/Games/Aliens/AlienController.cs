@@ -6,9 +6,9 @@ public class AlienController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer sprite = null;
     [SerializeField] private Animator animator = null;
-    [SerializeField] private Transform alienBullet = null;
-
     [SerializeField] private BoxCollider2D boxCollider = null;
+
+    private PoolBulletsController pullBulletsController;
 
     public float Width { get { return sprite.size.x; } }
     public float Height { get { return sprite.size.y; } }
@@ -30,6 +30,8 @@ public class AlienController : MonoBehaviour
     void Start()
     {
         alienTypeGetter = new AlienTypeGetter();
+
+        pullBulletsController = FindObjectOfType<PoolBulletsController>();
 
         GameManager.OnPause += PauseAlienController;
         GameManager.OnUnpause += UnpauseAlienController;
@@ -70,7 +72,7 @@ public class AlienController : MonoBehaviour
 
     public void Shoot()
     {
-        Instantiate(alienBullet, transform.position, Quaternion.identity);
+        pullBulletsController.ShootAlienBullet(transform.position);
     }
 
 

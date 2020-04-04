@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Transform bulletPlayer = null;
+    private PoolBulletsController pullBulletsController;
 
     private bool isAlive;
     private bool isPaused;
@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        pullBulletsController = FindObjectOfType<PoolBulletsController>();
+
         isAlive = true;
 
         GameManager.OnPause += PausePlayer;
@@ -43,8 +45,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            AudioManager.Instance.PlaySound(AudioManager.Sounds.ShootPlayer);
-            Instantiate(bulletPlayer, transform.localPosition, Quaternion.identity);
+            pullBulletsController.ShootPlayerBullet(transform.localPosition);
         }
     }
 
