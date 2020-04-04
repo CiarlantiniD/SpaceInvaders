@@ -171,12 +171,8 @@ public class GameManager : MonoBehaviour
 
     private void ResetAndLoseALife() 
     {
-        if (currentPlayerController == null)
-            return;
-        
         PlayerLifes = 1;
         currentPlayerController.Destroy();
-        currentPlayerController = null;
     }
 
 

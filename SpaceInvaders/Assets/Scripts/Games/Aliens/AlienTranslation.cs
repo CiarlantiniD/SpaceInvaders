@@ -7,12 +7,15 @@ public class AlienTranslation : MonoBehaviour
     [SerializeField] private int lateralMove = 18;
     [SerializeField] private float unidades = 0.05f;
     [SerializeField] private float startTimeIntervale = 1f;
+    [Space]
+    [SerializeField] private AnimationCurve animationCurve;
 
     private Vector3 initialPosition;
     private bool isActive;
     private bool isPaused;
 
     private float timeIntervale;
+    private float factor = 0;
 
     private IEnumerator MoveAliensCoroutine;
 
@@ -59,8 +62,8 @@ public class AlienTranslation : MonoBehaviour
         if (isActive == false)
             return;
 
-        if(timeIntervale > 0.04f)
-            timeIntervale -= Time.deltaTime * 0.02f;
+        factor += Time.deltaTime * 0.02f;
+        timeIntervale = Mathf.Lerp(0.04f, startTimeIntervale, animationCurve.Evaluate(factor));
     }
 
 

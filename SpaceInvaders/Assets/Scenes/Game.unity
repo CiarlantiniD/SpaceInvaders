@@ -995,6 +995,39 @@ MonoBehaviour:
   lateralMove: 38
   unidades: 0.1
   startTimeIntervale: 1
+  animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -1.9950044
+      outSlope: -1.9950044
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.087550685
+    - serializedVersion: 3
+      time: 0.48456174
+      value: 0.17098287
+      inSlope: -1.3430324
+      outSlope: -1.3430324
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07362098
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9733887
+      value: -0.015625
+      inSlope: -0.00000035641074
+      outSlope: -0.00000035641074
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.061743453
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1241697501
 MonoBehaviour:
   m_ObjectHideFlags: 0
