@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            AudioManager.Instance.PlaySound(AudioManager.Sounds.ShootPlayer);
             Instantiate(bulletPlayer, transform.localPosition, Quaternion.identity);
         }
     }
@@ -82,6 +83,7 @@ public class PlayerController : MonoBehaviour
         if (isAlive == false)
             return;
 
+        AudioManager.Instance.PlaySound(AudioManager.Sounds.ExplotionPlayer);
         GameManager.OnPlayerDestroy?.Invoke();
         Destroy(gameObject);
     }

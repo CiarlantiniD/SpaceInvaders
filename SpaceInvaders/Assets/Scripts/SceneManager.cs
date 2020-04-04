@@ -23,7 +23,14 @@ public class SceneManager : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
+        if (instanse == null)
+        {
+            instanse = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(this);
+
         currentGameScene = GameScene.Menu;
     }
 

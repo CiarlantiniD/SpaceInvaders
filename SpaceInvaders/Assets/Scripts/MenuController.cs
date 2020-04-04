@@ -41,6 +41,7 @@ public class MenuController : MonoBehaviour
     private IEnumerator GoToGameAnimation()
     {
         userInterface.TriggerStartTextAnimation();
+        AudioManager.Instance.PlayFXSound(AudioManager.FXSounds.MenuStarGame);
         yield return new WaitForSeconds(1f);
         userInterface.TurnOff();
         yield return new WaitForSeconds(0.5f);

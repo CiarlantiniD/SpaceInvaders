@@ -28,11 +28,13 @@ public class UIPauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            AudioManager.Instance.PlayFXSound(AudioManager.FXSounds.MenuEnter);
             ChangeToNextOptionMenu();
             UpdateVisual();
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            AudioManager.Instance.PlayFXSound(AudioManager.FXSounds.MenuEnter);
             ChangeToPreviusOptionMenu();
             UpdateVisual();
         }
@@ -73,7 +75,7 @@ public class UIPauseMenu : MonoBehaviour
     {
         switch (currentState)
         {
-            case 0: GameManager.OnUnpause?.Invoke(); break;
+            case 0: AudioManager.Instance.PlayFXSound(AudioManager.FXSounds.MenuBack); GameManager.OnUnpause?.Invoke(); break;
             case 1: GameManager.OnReturnToMenu?.Invoke(); break;
             default:
                 break;

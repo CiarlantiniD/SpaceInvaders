@@ -167,6 +167,7 @@ public class AlienController : MonoBehaviour
     IEnumerator DestroyAnimation()
     {
         boxCollider.enabled = false;
+        AudioManager.Instance.PlaySound(AudioManager.Sounds.ExplotionAlien);
         animator.SetTrigger("Destroy");
         yield return new WaitForSeconds(0.1f);
         OnDestroyAlien?.Invoke(PositioninMatrix);
