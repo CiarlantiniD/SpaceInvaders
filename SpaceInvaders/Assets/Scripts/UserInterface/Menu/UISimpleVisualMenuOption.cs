@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class UIPauseMenuOption : MonoBehaviour, IMenuOption
+public class UISimpleVisualMenuOption : MonoBehaviour, IMenuOption
 {
     [SerializeField] private Text optionText;
 

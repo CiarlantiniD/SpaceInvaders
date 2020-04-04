@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -10,6 +9,11 @@ public class MenuController : MonoBehaviour
     private SceneManager sceneManager;
     private RecordManager recordManager;
 
+    public Action OnStartGame;
+    public Action OnExitGame;
+
+    private bool isGameStarting = false;
+
     private void Awake()
     {
         sceneManager = FindObjectOfType<SceneManager>();
@@ -18,8 +22,19 @@ public class MenuController : MonoBehaviour
         if (sceneManager == null)
             throw new Exception("No se encontro el SceneManager");
 
+        OnStartGame += StartGame;
+        OnExitGame += ExitGame;
+
         SetBestScore();
     }
+
+
+    private void OnDestroy()
+    {
+        OnStartGame -= StartGame;
+        OnExitGame -= ExitGame;
+    }
+
 
     private void SetBestScore()
     {
@@ -30,12 +45,13 @@ public class MenuController : MonoBehaviour
     }
 
 
-    void Update()
+    private void StartGame()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            StartCoroutine(GoToGameAnimation());
-        }
+        if (isGameStarting)
+            return;
+
+        isGameStarting = true;
+        StartCoroutine(GoToGameAnimation());
     }
 
     private IEnumerator GoToGameAnimation()
@@ -49,5 +65,13 @@ public class MenuController : MonoBehaviour
     }
 
 
+    private void ExitGame()
+    {
+#if UNITY_EDITOR
+        Debug.Log("<color=red>ExitGame</color>");
+#else
+        Application.Quit();
+#endif
+    }
 
 }
