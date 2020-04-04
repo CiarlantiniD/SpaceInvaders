@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     static public Action OnPause;
     static public Action OnUnpause;
+    static public Action OnReturnToMenu;
     private bool isPaused;
 
 
@@ -48,6 +49,8 @@ public class GameManager : MonoBehaviour
         OnAllAliensDestroy += RestartLevel;
         OnAliensTouchFloor += ResetAndLoseALife;
 
+        OnReturnToMenu += ReturnToMenu;
+
         AlienInstancerConfiguration config = new AlienInstancerConfiguration(columns, rows, pandding);
         alienInstancer.SetConfiguration(config);
         alienInstancer.CreateAliens();
@@ -64,6 +67,8 @@ public class GameManager : MonoBehaviour
         OnAlienDestroy -= Score;
         OnAllAliensDestroy -= RestartLevel;
         OnAliensTouchFloor -= ResetAndLoseALife;
+
+        OnReturnToMenu -= ReturnToMenu;
     }
 
 
@@ -74,13 +79,11 @@ public class GameManager : MonoBehaviour
             if (isPaused)
             {
                 OnUnpause?.Invoke();
-                userInferfaceController.TurnOffPausePanel();
                 isPaused = false;
             }
             else
             {
                 OnPause?.Invoke();
-                userInferfaceController.TurnOnPausePanel();
                 isPaused = true;
             }
                 
@@ -159,7 +162,7 @@ public class GameManager : MonoBehaviour
         if (recordManager.GetBestScore() < currentScore)
             recordManager.SaveBestScore(currentScore);
 
-        sceneManager.GoBackToMenu();
+        ReturnToMenu();
     }
 
     private void StopGame()
@@ -167,6 +170,10 @@ public class GameManager : MonoBehaviour
         alienInstancer.Stop();
     }
 
+    private void ReturnToMenu()
+    {
+        sceneManager.GoBackToMenu();
+    }
 
 
 
