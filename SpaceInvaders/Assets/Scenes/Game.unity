@@ -617,7 +617,7 @@ MonoBehaviour:
   pandding: 0.6
   userInferfaceController: {fileID: 295964596}
   alienInstancer: {fileID: 1241697498}
-  player: {fileID: 1090799395746019783, guid: 0764d830ff6684d4197e2b6106be331e, type: 3}
+  poolBulletsController: {fileID: 1916027760}
 --- !u!4 &805802207
 Transform:
   m_ObjectHideFlags: 0

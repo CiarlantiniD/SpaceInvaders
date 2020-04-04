@@ -22,6 +22,7 @@ public class PoolBulletsController : MonoBehaviour
         pooledBulletAlien = AddInstancesOfObject(AlienBullet, amountAlienBullet);
     }
 
+
     private List<GameObject> AddInstancesOfObject(GameObject gameObject, int amount)
     {
         List<GameObject> pooledObject = new List<GameObject>();
@@ -63,5 +64,21 @@ public class PoolBulletsController : MonoBehaviour
 
         }
     }
+
+    public void ResetPool()
+    {
+        DesactivateObjects(ref pooledBulletPlayer);
+        DesactivateObjects(ref pooledBulletAlien);
+    }
+
+    private void DesactivateObjects(ref List<GameObject> gameObjects)
+    {
+        for (int i = 0; i < gameObjects.Count; i++)
+        {
+            if (gameObjects[i].activeInHierarchy)
+                gameObjects[i].SetActive(false);
+        }
+    }
+
 
 }

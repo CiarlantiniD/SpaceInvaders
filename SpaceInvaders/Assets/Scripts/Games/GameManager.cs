@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [Space(10)]
     [SerializeField] private UserInterfaceController userInferfaceController = null;
     [SerializeField] private AlienInstancer alienInstancer = null;
-    [SerializeField] private GameObject player = null;
+    [SerializeField] private PoolBulletsController poolBulletsController = null;
 
     private PlayerController currentPlayerController;
 
@@ -110,6 +110,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
 
+        poolBulletsController.ResetPool();
         currentPlayerController.ResetPlayer();
         alienInstancer.OnReset();
     }
