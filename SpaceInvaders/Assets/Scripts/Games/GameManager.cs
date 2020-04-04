@@ -35,12 +35,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        sceneManager = SceneManager.Instance; //FindObjectOfType<SceneManager>();
+        sceneManager = SceneManager.Instance;
 
         if (sceneManager == null)
             throw new Exception("No se encontro el SceneManager");
 
         recordManager = new RecordManager();
+
+        currentPlayerController = FindObjectOfType<PlayerController>();
 
         userInferfaceController.LifesToShow(PlayerLifes);
 
@@ -57,8 +59,6 @@ public class GameManager : MonoBehaviour
 
 
         userInferfaceController.SetScore(currentScore);
-
-        CreatePlayer();
     }
 
     private void OnDestroy()
@@ -110,8 +110,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
 
-        // + Animacion
-        // + Reposicionar Player
+        currentPlayerController.ResetPlayer();
         alienInstancer.OnReset();
     }
 
@@ -136,16 +135,8 @@ public class GameManager : MonoBehaviour
     IEnumerator PlayerRecoveryAnimation()
     {
         yield return new WaitForSeconds(2);
-        CreatePlayer();
+        currentPlayerController.ResetPlayer();
     }
-
-    private void CreatePlayer()
-    {
-        GameObject currentPlayer = Instantiate(player);
-        currentPlayerController = currentPlayer.GetComponent<PlayerController>();
-    }
-
-    
 
 
 

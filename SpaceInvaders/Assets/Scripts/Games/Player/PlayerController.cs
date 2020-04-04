@@ -12,6 +12,13 @@ public class PlayerController : MonoBehaviour
     private const float MIN_X = -6;
     private const float MAX_X = 6;
 
+    private Vector3 initialPosition;
+
+    private void Awake()
+    {
+        initialPosition = transform.position;
+    }
+
     void Start()
     {
         pullBulletsController = FindObjectOfType<PoolBulletsController>();
@@ -84,9 +91,18 @@ public class PlayerController : MonoBehaviour
         if (isAlive == false)
             return;
 
+        isAlive = false;
         AudioManager.Instance.PlaySound(AudioManager.Sounds.ExplotionPlayer);
         GameManager.OnPlayerDestroy?.Invoke();
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+
+
+    public void ResetPlayer()
+    {
+        isAlive = true;
+        transform.position = initialPosition;
+        gameObject.SetActive(true);
     }
 
 
