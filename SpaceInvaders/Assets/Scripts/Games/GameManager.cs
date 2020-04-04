@@ -173,6 +173,7 @@ public class GameManager : MonoBehaviour
     {
         PlayerLifes = 1;
         currentPlayerController.Destroy();
+        alienInstancer.Stop();
     }
 
 
