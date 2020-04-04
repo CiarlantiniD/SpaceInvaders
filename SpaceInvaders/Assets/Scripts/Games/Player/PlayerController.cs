@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Transform bulletPlayer;
+    [SerializeField] private Transform bulletPlayer = null;
 
     private bool isAlive;
     private bool isPaused;

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class UISimpleVisualMenuOption : MonoBehaviour, IMenuOption
 {
-    [SerializeField] private Text optionText;
+    [SerializeField] private Text optionText = null;
 
     private Color colorSelect = Color.white;
     private Color colorUnselect = Color.gray;

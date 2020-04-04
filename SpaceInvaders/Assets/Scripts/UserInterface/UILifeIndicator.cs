@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UILifeIndicator : MonoBehaviour
 {
-    [SerializeField] private GameObject life;
+    [SerializeField] private GameObject life = null;
 
 
     public void ShowValue(int value)

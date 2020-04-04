@@ -6,10 +6,10 @@ using System;
 
 public class MenuUserInterfaceController : MonoBehaviour
 {
-    [SerializeField] private GameObject bestScore;
+    [SerializeField] private GameObject bestScore = null;
 
     [Space(10)]
-    [SerializeField] private Animator startTextAnimator;
+    [SerializeField] private Animator startTextAnimator = null;
 
 
 

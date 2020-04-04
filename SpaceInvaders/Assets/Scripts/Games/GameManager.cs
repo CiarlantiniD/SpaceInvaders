@@ -9,9 +9,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int rows = 4;
     [SerializeField] private float pandding = 0.25f;
     [Space(10)]
-    [SerializeField] private UserInterfaceController userInferfaceController;
-    [SerializeField] private AlienInstancer alienInstancer;
-    [SerializeField] private GameObject player;
+    [SerializeField] private UserInterfaceController userInferfaceController = null;
+    [SerializeField] private AlienInstancer alienInstancer = null;
+    [SerializeField] private GameObject player = null;
 
     private PlayerController currentPlayerController;
 

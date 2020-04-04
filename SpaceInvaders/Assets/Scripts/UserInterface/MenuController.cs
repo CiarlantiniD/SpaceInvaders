@@ -4,7 +4,7 @@ using System;
 
 public class MenuController : MonoBehaviour
 {
-    [SerializeField] private MenuUserInterfaceController userInterface;
+    [SerializeField] private MenuUserInterfaceController userInterface = null;
 
     private SceneManager sceneManager;
     private RecordManager recordManager;

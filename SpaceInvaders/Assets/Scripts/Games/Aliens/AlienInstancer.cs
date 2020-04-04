@@ -6,8 +6,8 @@ using System;
 public class AlienInstancer : MonoBehaviour
 {
     [SerializeField] private GameObject alien = null;
-    [SerializeField] private AlienTranslation alienTranslation;
-    [SerializeField] private AlienBulletController alienBulletController;
+    [SerializeField] private AlienTranslation alienTranslation = null;
+    [SerializeField] private AlienBulletController alienBulletController = null;
 
     private AlienInstancerConfiguration configuration;
 

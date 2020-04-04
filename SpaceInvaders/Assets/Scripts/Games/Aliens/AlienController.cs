@@ -1,50 +1,14 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class AlienType
-{
-    public readonly int lifes;
-    public readonly int typeId;
-    public readonly Color color;
-
-    public AlienType(int typeId, int lifes, Color color)
-    {
-        this.typeId = typeId;
-        this.lifes = lifes;
-        this.color = color;
-    }
-}
-
-public class AlienTypeGetter
-{
-    AlienType[] alienTypes;
-
-    public AlienTypeGetter()
-    {
-        alienTypes = new AlienType[4];
-        alienTypes[0] = new AlienType(1,2,Color.red);
-        alienTypes[1] = new AlienType(2,2,Color.yellow);
-        alienTypes[2] = new AlienType(3,1,Color.blue);
-        alienTypes[3] = new AlienType(4,1,Color.green);
-    }
-
-    public AlienType GetRandomAlienType()
-    {
-        return alienTypes[UnityEngine.Random.Range(0, alienTypes.Length)];
-    }
-
-}
-
-
 public class AlienController : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private Animator animator;
-    [SerializeField] private Transform alienBullet;
+    [SerializeField] private SpriteRenderer sprite = null;
+    [SerializeField] private Animator animator = null;
+    [SerializeField] private Transform alienBullet = null;
 
-    [SerializeField] private BoxCollider2D boxCollider;
+    [SerializeField] private BoxCollider2D boxCollider = null;
 
     public float Width { get { return sprite.size.x; } }
     public float Height { get { return sprite.size.y; } }
@@ -81,11 +45,6 @@ public class AlienController : MonoBehaviour
     }
 
 
-
-
-
-
-
     public void OnReset()
     {
         SetAlienType();
@@ -116,19 +75,6 @@ public class AlienController : MonoBehaviour
 
 
 
-
-
-
-    public void SetPositionInMatrix(int column, int row)
-    {
-        if (PositioninMatrix.Equals(default) == false)
-            return;
-        
-        PositioninMatrix = new Vector2(column, row);
-    }
-
-
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "PlayerBullet")
@@ -138,6 +84,7 @@ public class AlienController : MonoBehaviour
             Destoy();
     }
 
+
     public void Hit()
     {
         if (Lifes == 0)
@@ -146,14 +93,11 @@ public class AlienController : MonoBehaviour
         --Lifes;
 
         if(Lifes == 0)
-        {
             Destoy();
-        }
         else
-        {
             animator.SetTrigger("Hit");
-        }
     }
+
 
     public void Destoy()
     {
@@ -171,9 +115,16 @@ public class AlienController : MonoBehaviour
         animator.SetTrigger("Destroy");
         yield return new WaitForSeconds(0.1f);
         OnDestroyAlien?.Invoke(PositioninMatrix);
-        //Destroy(gameObject);
+    }
 
 
+
+    public void SetPositionInMatrix(int column, int row)
+    {
+        if (PositioninMatrix.Equals(default) == false)
+            return;
+
+        PositioninMatrix = new Vector2(column, row);
     }
 
 

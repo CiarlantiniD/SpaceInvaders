@@ -18,17 +18,17 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private AudioClip musicMenu;
+    [SerializeField] private AudioClip musicMenu = null;
     [Space(20)]
-    [SerializeField] private AudioClip soundShootAlien;
-    [SerializeField] private AudioClip soundExplotionAlien;
+    [SerializeField] private AudioClip soundShootAlien = null;
+    [SerializeField] private AudioClip soundExplotionAlien = null;
     [Space(10)]
-    [SerializeField] private AudioClip soundShootPlayer;
-    [SerializeField] private AudioClip soundExplotionPlayer;
+    [SerializeField] private AudioClip soundShootPlayer = null;
+    [SerializeField] private AudioClip soundExplotionPlayer = null;
     [Space(20)]
-    [SerializeField] private AudioClip fxMenuEnter;
-    [SerializeField] private AudioClip fxMenuBack;
-    [SerializeField] private AudioClip fxMenuStarGame;
+    [SerializeField] private AudioClip fxMenuEnter = null;
+    [SerializeField] private AudioClip fxMenuBack = null;
+    [SerializeField] private AudioClip fxMenuStarGame = null;
 
 
     public enum Music {Menu = 0 }

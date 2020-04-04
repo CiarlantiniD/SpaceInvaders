@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class UserInterfaceController : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject pauseMenu = null;
 
     [SerializeField] 
-    private GameObject panel;
+    private GameObject panel = null;
     private Text panelText;
 
-    [SerializeField] private UILifeIndicator lifesIndicator;
+    [SerializeField] private UILifeIndicator lifesIndicator = null;
 
-    [SerializeField] private Text scoreText;
+    [SerializeField] private Text scoreText = null;
 
     private void Start()
     {
